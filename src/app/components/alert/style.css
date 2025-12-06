@@ -1,0 +1,10 @@
+
+.alert-card {
+  background: #fff !important;
+  border-radius: 8px;
+}
+
+.app.dark .alert-card {
+  background: #262626 !important;
+  color: #ddd;
+}

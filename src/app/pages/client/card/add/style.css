@@ -1,0 +1,21 @@
+.form-card {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.app.dark .form-card {
+  background: #262626;
+  color: #ddd;
+}
+
+.app.dark .form-control {
+  background: #262626;
+  color: #ddd;
+}
+
+.app.dark .form-control::placeholder {
+  color: #ddd;
+}
