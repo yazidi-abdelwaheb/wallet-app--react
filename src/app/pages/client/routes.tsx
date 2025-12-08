@@ -8,6 +8,10 @@ import Edit from "./card/list/edit";
 import Show from "./card/list/show";
 import DashboardPage from "./dashboard";
 import Profile from "./profile";
+import History from "./transaction/history";
+import TransactionLayout from "./transaction";
+import Transaction from "./transaction/add";
+import Receive from "./transaction/receive";
 
 const router = [
   {
@@ -19,15 +23,26 @@ const router = [
         path: "cards",
         element: <CardsLayout />,
         children: [
-          { index: true, element: <List /> }, 
-          { path: "add", element: <Add /> }, 
+          { index: true, element: <List /> },
+          { path: "add", element: <Add /> },
           { path: ":id", element: <Show /> },
           { path: ":id/edit", element: <Edit /> },
         ],
       },
-      {path : "my-profile" , element : <Profile/>},
-      {path : "404" , element : <Four04/>},
-      {path : "unauthorized" , element : <Unauthorized/>}
+      {
+        path: "transactions",
+        element: <TransactionLayout />,
+        children: [
+          { index: true, element: <Transaction /> },
+          { path: "send", element: <Transaction /> },
+          { path: "history", element: <History /> },
+          { path: "receive", element: <Receive /> },
+        ],
+      },
+
+      { path: "my-profile", element: <Profile /> },
+      { path: "404", element: <Four04 /> },
+      { path: "unauthorized", element: <Unauthorized /> },
     ],
   },
 ];

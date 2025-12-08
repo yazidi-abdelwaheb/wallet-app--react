@@ -9,7 +9,7 @@ interface CardProps {
 export default function CardItemComponent({ card }: CardProps) {
   // Supposons que card.weeklyLimit = limite de la semaine
   // et card.amount = montant restant
-  const remaining = card.weeklyLimit - card.amount;
+  const remaining = card.weeklyLimit - card.spentThisWeek;
 
   // Définir la couleur du border
   let borderClass = "border-success"; // par défaut vert
@@ -22,7 +22,7 @@ export default function CardItemComponent({ card }: CardProps) {
   return (
     <Link
       to={`/dashboard/cards/${card._id}`}
-      className={`wallet-card text-decoration-none card p-3 ${borderClass}`}
+      className={`wallet-card text-decoration-none card p-3 border-2 ${borderClass}`}
     >
       <div className="card-item shadow">
       <div className="card-info">

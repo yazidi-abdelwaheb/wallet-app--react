@@ -1,13 +1,27 @@
 .auth-container {
+  background: linear-gradient(1800deg, #ffff 50%, #0d6efd 50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
 }
 
 .auth-card {
-  width: 400px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
   border-radius: 12px;
-  background-color: #fff;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }

@@ -78,7 +78,7 @@ export default function ClientLayout() {
           </NavLink>
 
           <NavLink
-            to="/dashboard/transactions"
+            to="/dashboard/transactions/send"
             className={({ isActive }) =>
               "sidebar-link" + (isActive ? " active" : "")
             }

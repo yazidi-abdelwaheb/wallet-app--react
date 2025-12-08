@@ -1,0 +1,18 @@
+.card {
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.app.dark .card{
+    background: #262626;
+  border-color: #333;
+  color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+button {
+  font-weight: 600;
+}

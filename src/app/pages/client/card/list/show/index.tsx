@@ -3,12 +3,12 @@ import axiosInstance from "../../../../../api/axios";
 import { useEffect, useState } from "react";
 import ICard from "../../../../../models/card.model";
 import CardItemComponent from "../../../../../components/card";
+import { toast } from "react-toastify";
 
 export default function Show() {
   const { id } = useParams();
   const [card, setCard] = useState<ICard | null>(null);
   const [topUpAmount, setTopUpAmount] = useState<number>(0);
-  const [spendAmount, setSpendAmount] = useState<number>(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,28 +25,28 @@ export default function Show() {
   }, [id]);
 
   const handleTopUp = async () => {
-    if (topUpAmount <= 0) return alert("Montant invalide !");
+    if (!topUpAmount || topUpAmount <= 0) {
+      toast.error("Please enter a valid amount!");
+      return;
+    }
+
     setLoading(true);
     try {
-      await axiosInstance.post("/cards/topup", { cardId: id, amount: topUpAmount });
-      alert(`Carte rechargée de ${topUpAmount}`);
+      const res = await axiosInstance.patch(`/cards/${id}/recharge`, {
+        cardId: id,
+        amount: topUpAmount,
+      });
+
+      toast.success(`Card topped up with ${topUpAmount} TND`);
+
+      // ✅ mettre à jour le solde local
+      setCard((prev) =>
+        prev ? { ...prev, amount: prev.amount + topUpAmount } : prev
+      );
+
       setTopUpAmount(0);
     } catch (err: any) {
-      alert(err.response?.data?.error || "Erreur lors du rechargement");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSpend = async () => {
-    if (spendAmount <= 0) return alert("Montant invalide !");
-    setLoading(true);
-    try {
-      await axiosInstance.post("/cards/spend", { cardId: id, amount: spendAmount });
-      alert(`Vous avez dépensé ${spendAmount}`);
-      setSpendAmount(0);
-    } catch (err: any) {
-      alert(err.response?.data?.error || "Erreur lors de la dépense");
+      toast.error(err.response?.data?.error || "Error during top-up");
     } finally {
       setLoading(false);
     }
@@ -54,54 +54,55 @@ export default function Show() {
 
   return (
     <div className="app-card">
-      <h3 className="page-title">Détails de la carte</h3>
+      <h3 className="page-title">Card details</h3>
 
       {card ? (
         <>
           <CardItemComponent card={card} />
           <hr />
-          <p><strong>Solde :</strong> {card.amount} €</p>
-          <p><strong>Dépenses semaine :</strong> {card.spentThisWeek} / {card.weeklyLimit} €</p>
-
+          <p>
+            <strong>Sold :</strong> {card.amount} TND
+          </p>
+          <p>
+            <strong>Weekly expenses:</strong> {card.spentThisWeek} /{" "}
+            {card.weeklyLimit} TND
+          </p>
+          <hr />
           <div className="mb-2">
             <input
               type="number"
               className="form-control mb-1"
-              placeholder="Montant à recharger"
+              placeholder="Amount to top up"
               value={topUpAmount}
               onChange={(e) => setTopUpAmount(Number(e.target.value))}
               disabled={loading}
             />
-            <button className="btn btn-success w-100" onClick={handleTopUp} disabled={loading}>
-              <i className="bi bi-wallet2 me-1"></i> Recharger
-            </button>
-          </div>
-
-          <div>
-            <input
-              type="number"
-              className="form-control mb-1"
-              placeholder="Montant à dépenser"
-              value={spendAmount}
-              onChange={(e) => setSpendAmount(Number(e.target.value))}
+            <button
+              className="btn btn-success w-100"
+              onClick={handleTopUp}
               disabled={loading}
-            />
-            <button className="btn btn-danger w-100" onClick={handleSpend} disabled={loading}>
-              <i className="bi bi-cash-stack me-1"></i> Dépenser
+            >
+              {loading ? (
+                <span className="spinner-border spinner-border-sm me-2"></span>
+              ) : (
+                <i className="bi bi-wallet2 me-1"></i>
+              )}
+              Recharge
             </button>
           </div>
 
+          <hr />
           <div className="d-flex gap-2 mt-3">
             <Link to="edit" className="btn btn-warning w-50">
-              <i className="bi bi-pencil"></i> Modifier
+              <i className="bi bi-pencil"></i> Edit
             </Link>
             <Link to="/dashboard/cards" className="btn btn-secondary w-50">
-              Retour
+              Back to list
             </Link>
           </div>
         </>
       ) : (
-        <p>Chargement de la carte...</p>
+        <p>Loading card...</p>
       )}
     </div>
   );
