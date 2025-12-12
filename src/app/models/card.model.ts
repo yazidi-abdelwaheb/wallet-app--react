@@ -11,4 +11,6 @@ export default interface ICard {
   lastReset: Date;
   createdAt: Date;
   holderName : string;
+  isActive : boolean;
+  isDeleted : boolean;
 }

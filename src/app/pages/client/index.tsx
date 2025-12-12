@@ -87,7 +87,7 @@ export default function ClientLayout() {
           </NavLink>
 
           <NavLink
-            to="/dashboard/settings"
+            to="/dashboard/settings/account"
             className={({ isActive }) =>
               "sidebar-link" + (isActive ? " active" : "")
             }

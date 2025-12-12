@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import api from "../../../api/axios";
 
 export default function DashboardPage() {
-  const [balance, setBalance] = useState<number>(0)
+  const [balance, setBalance] = useState<number>(0);
 
-  const [error, setError] = useState<string>("")
+  const [error, setError] = useState<string>("");
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [amount, setAmount] = useState<number>(0);
@@ -22,39 +22,36 @@ export default function DashboardPage() {
       }
     };
 
-    fetchBalance(); 
+    fetchBalance();
   }, []);
- const handleTopUp = async () => {
-  if (amount <= 0) {
-    setError("Please enter a valid amount!");
-    return;
-  }
-
-  try {
-    const res = await api.patch("/users/balance/recharge", {
-      amount, // montant à recharger
-    });
-
-    if (res.data.url) {
-      window.location.href = res.data.url; // redirection vers une autre page
-      // ou navigate("/payment?amount=" + amount);
-    } else {
-      toast.success(`You topped up ${amount} TND successfully!`)
+  const handleTopUp = async () => {
+    if (amount <= 0) {
+      setError("Please enter a valid amount!");
+      return;
     }
 
-    setBalance(balance+amount);
+    try {
+      const res = await api.patch("/users/balance/recharge", {
+        amount, // montant à recharger
+      });
 
-    setShowModal(false);
-    setAmount(0);
-    setError("");
-  } catch (err: any) {
-    console.error(err);
-    setError(err.response?.data?.message || "An error occurred while topping up.");
-  }
-};
+      toast.success(`You topped up ${amount} TND successfully!`);
+
+      setBalance(balance + amount);
+
+      setShowModal(false);
+      setAmount(0);
+      setError("");
+    } catch (err: any) {
+      console.error(err);
+      setError(
+        err.response?.data?.message || "An error occurred while topping up."
+      );
+    }
+  };
 
   return (
-    <div className="dashboard-container text-center">
+    <div className="dashboard-container text-center mt-5">
       <h2 className="page-title">Welcome to your WalletPro App</h2>
       <p className="subtitle">View and manage your cards quickly.</p>
 
@@ -86,9 +83,7 @@ export default function DashboardPage() {
         </Modal.Header>
         <Modal.Body>
           <div>
-            {error && (
-              <div className="alert alert-danger" >{error}</div>
-            )}
+            {error && <div className="alert alert-danger">{error}</div>}
           </div>
           <Form>
             <Form.Group className="mb-3">

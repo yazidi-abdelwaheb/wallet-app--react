@@ -81,7 +81,7 @@
 /* ===== MAIN CONTENT ===== */
 .main-content {
   flex-grow: 1;
-  padding: 25px;
+  
   overflow-y: auto;
   background: #f5f6fa;
 }

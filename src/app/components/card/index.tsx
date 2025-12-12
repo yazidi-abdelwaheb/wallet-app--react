@@ -25,10 +25,9 @@ export default function CardItemComponent({ card }: CardProps) {
       className={`wallet-card text-decoration-none card p-3 border-2 ${borderClass}`}
     >
       <div className="card-item shadow">
-      <div className="card-info">
-        <h5 className="card-title">Card Number</h5>
-        <p className="card-number">{card.cardNumber}</p>
-        <p className="card-holder">Holder name: {card.holderName} </p>
+      <div className="card-info d-flex flex-column">
+        <span className="card-holder">{card.holderName} </span>
+        <span className="card-number">{card.cardNumber}</span>
       </div>
 
       <div className="qr-code">

@@ -32,7 +32,7 @@ export default function Show() {
 
     setLoading(true);
     try {
-      const res = await axiosInstance.patch(`/cards/${id}/recharge`, {
+      const res = await axiosInstance.patch(`/cards/recharge/${id}`, {
         cardId: id,
         amount: topUpAmount,
       });
@@ -67,6 +67,25 @@ export default function Show() {
             <strong>Weekly expenses:</strong> {card.spentThisWeek} /{" "}
             {card.weeklyLimit} TND
           </p>
+          <p>
+            <strong>Week start :</strong>{" "}
+            {new Date(card.lastReset).toLocaleDateString("en-EN", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          <p>
+            <strong>Week end :</strong>{" "}
+            {new Date(
+              new Date(card.lastReset).getTime() + 7 * 24 * 60 * 60 * 1000
+            ).toLocaleDateString("en-EN", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+
           <hr />
           <div className="mb-2">
             <input

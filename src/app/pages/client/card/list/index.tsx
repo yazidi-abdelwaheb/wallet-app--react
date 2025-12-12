@@ -16,7 +16,7 @@ export default function List() {
       setLoading(true);
       try {
         const res = await axios.get<{ docs: ICard[]; totalPages?: number }>(
-          `/cards?page=${page}&search=${search}`
+          `/cards?page=${page}&search=${search}&isActive=true&isDeleted=false`
         );
 
         if (page === 1) {

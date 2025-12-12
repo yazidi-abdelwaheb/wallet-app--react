@@ -12,6 +12,9 @@ import History from "./transaction/history";
 import TransactionLayout from "./transaction";
 import Transaction from "./transaction/add";
 import Receive from "./transaction/receive";
+import SettingLayout from "./setting";
+import AccountSetting from "./setting/account";
+import CardSetting from "./setting/card";
 
 const router = [
   {
@@ -37,6 +40,15 @@ const router = [
           { path: "send", element: <Transaction /> },
           { path: "history", element: <History /> },
           { path: "receive", element: <Receive /> },
+        ],
+      },
+      {
+        path: "settings",
+        element: <SettingLayout />,
+        children: [
+          { index: true, element: <AccountSetting /> },
+          { path: "account", element: <AccountSetting /> },
+          { path: "card", element: <CardSetting /> },
         ],
       },
 

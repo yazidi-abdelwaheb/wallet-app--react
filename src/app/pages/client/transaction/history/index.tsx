@@ -14,12 +14,26 @@ interface ITransaction {
 export default function History() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const res = await api.get<{ docs: ITransaction[] }>("/transactions");
-        setTransactions(res.data.docs);
+        const res = await api.get<{ docs: ITransaction[] , totalPages : number}>("/transactions");
+        if (page === 1) {
+          setTransactions(res.data.docs);
+        } else {
+          setTransactions((prev) => [...prev, ...res.data.docs]);
+        }
+
+        if (res.data.totalPages && page >= res.data.totalPages) {
+          setHasMore(false);
+        } else if (!res.data.docs.length) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
       } catch (err: any) {
         console.error("Error fetching transactions:", err);
         toast.error(err.response?.data?.message || "Failed to load transactions");
@@ -29,7 +43,7 @@ export default function History() {
     };
 
     fetchTransactions();
-  }, []);
+  }, [page]);
 
   return (
     <div className="transaction-history mt-4">
@@ -78,6 +92,14 @@ export default function History() {
           ))}
         </div>
       )}
+      {hasMore && !loading && (
+          <button
+            className="btn btn-primary mt-5 w-100 fw-bold"
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Show more
+          </button>
+        )}
     </div>
   );
 }

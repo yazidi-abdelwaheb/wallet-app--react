@@ -1,0 +1,40 @@
+/* Container */
+.settings-container {
+  background: #f7f8fc;
+}
+
+.app.dark .settings-container {
+  background: #333;
+  color: #f0f2ff;
+}
+
+/* Sidebar */
+.settings-sidebar {
+  width: 280px;
+}
+
+/* Menu Items */
+.settings-menu .item {
+  padding: 12px 10px;
+  color: #333;
+  transition: 0.2s;
+}
+
+.app.dark .settings-menu .item{
+    color: #f0f2ff;
+}
+
+.settings-menu .item.active,.settings-menu .item:hover {
+  background: #f0f2ff;
+  color: #5b5ff0 !important;
+}
+
+.app.dark .settings-menu .item.active {
+  background: #202020;
+  border-color: #33367e;
+}
+
+.app.dark .settings-menu .item.active , .app.dark .settings-menu .item:hover {
+  background: #202020;
+  border-color: #33367e;
+}

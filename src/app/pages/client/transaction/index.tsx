@@ -4,11 +4,11 @@ import "./style.css";
 
 export default function TransactionLayout() {
   return (
-    <>
+    <div className="p-5">
       <h2 className="fw-bold">Transactions</h2>
       <p>Make secure transfers and view your history.</p>
 
-      <Nav variant="tabs" defaultActiveKey="dashboard/transactions"  className="d-flex justify-content-center gap-3 mb-3">
+      <Nav variant="tabs" defaultActiveKey="dashboard/transactions"  className="d-flex justify-content-center gap-3">
         <Nav.Item className="trans-item">
           <Nav.Link as={NavLink} to="/dashboard/transactions/send">
             <i className="bi bi-send-plus-fill icon"></i>
@@ -31,9 +31,9 @@ export default function TransactionLayout() {
         </Nav.Item>
       </Nav>
 
-      <div>
+      <div  className="p-3 transactions-content">
         <Outlet />
       </div>
-    </>
+    </div>
   );
 }
